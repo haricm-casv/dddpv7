@@ -1,0 +1,371 @@
+/* Email Verification Page Styles */
+
+.email-verification-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verification-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.verification-header {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: white;
+}
+
+.email-icon,
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.success-icon {
+  color: #10b981;
+  background: white;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.verification-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.verification-header p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.verification-content {
+  padding: 2rem;
+}
+
+.success-message {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.success-message h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-message p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.next-steps {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.next-steps h3 {
+  margin: 0 0 1rem 0;
+  color: #1e293b;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.next-steps ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #374151;
+}
+
+.next-steps li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.verification-form {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: #374151;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.code-input {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5rem;
+  padding: 1rem;
+  border: 3px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-help {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 160px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+}
+
+.btn-secondary {
+  background: white;
+  color: #4f46e5;
+  border: 2px solid #4f46e5;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #4f46e5;
+  color: white;
+}
+
+.btn-large {
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+}
+
+.verification-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+  justify-content: center;
+}
+
+.verification-footer {
+  padding: 1.5rem 2rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.verification-footer p {
+  margin: 0.5rem 0;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: inherit;
+}
+
+.link-button:hover:not(:disabled) {
+  color: #3730a3;
+}
+
+.link-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.verification-help {
+  padding: 1.5rem 2rem;
+  background: #fef3c7;
+  border-top: 1px solid #f59e0b;
+}
+
+.verification-help h3 {
+  margin: 0 0 1rem 0;
+  color: #92400e;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.verification-help ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #92400e;
+  font-size: 0.9rem;
+}
+
+.verification-help li {
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .email-verification-page {
+    padding: 1rem;
+  }
+
+  .verification-container {
+    max-width: 100%;
+  }
+
+  .verification-header {
+    padding: 1.5rem;
+  }
+
+  .verification-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .email-icon {
+    font-size: 3rem;
+  }
+
+  .verification-content {
+    padding: 1.5rem;
+  }
+
+  .verification-form {
+    padding: 1.5rem;
+  }
+
+  .code-input {
+    font-size: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .verification-actions {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .verification-actions .btn {
+    width: 100%;
+  }
+
+  .verification-footer {
+    padding: 1rem 1.5rem;
+  }
+
+  .verification-help {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .verification-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .verification-header p {
+    font-size: 0.9rem;
+  }
+
+  .code-input {
+    font-size: 1.25rem;
+  }
+
+  .btn-large {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+/* Animation for success state */
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-icon {
+  animation: checkmark 0.6s ease-out;
+}
+
+/* Focus states for accessibility */
+.code-input:focus {
+  transform: scale(1.02);
+}
+
+/* Error state styling */
+.code-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

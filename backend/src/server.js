@@ -5,18 +5,26 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 require('dotenv').config();
 
+// Import database configuration and models
+const { testConnection } = require('./config/database');
+const models = require('./models');
+
 // Import custom middleware and routes
 const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
 
-// Import route handlers
+// Import route handlers (create placeholder files for missing routes)
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
-const apartmentRoutes = require('./routes/apartments');
+const apartmentRoutes = require('./routes/apartments') || ((req, res) => res.status(501).json({ error: 'Not implemented' }));
 const notificationRoutes = require('./routes/notifications');
 const approvalRoutes = require('./routes/approvals');
 const parkingRoutes = require('./routes/parking');
-const auditRoutes = require('./routes/audit');
+const auditRoutes = require('./routes/audit') || ((req, res) => res.status(501).json({ error: 'Not implemented' }));
+const pstRoutes = require('./routes/pst');
+
+// Import WebSocket server
+const WebSocketServer = require('./websocket/webSocketServer');
 
 // Initialize Express app
 const app = express();
@@ -95,6 +103,7 @@ app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/approvals', approvalRoutes);
 app.use('/api/v1/parking', parkingRoutes);
 app.use('/api/v1/audit', auditRoutes);
+app.use('/api/v1/pst', pstRoutes);
 
 // 404 handler for API routes
 app.use('/api/*', (req, res) => {
@@ -110,13 +119,49 @@ app.use('/api/*', (req, res) => {
 // Error handling middleware (must be last)
 app.use(errorHandler);
 
-// Start server
+// Initialize database and start server
 if (require.main === module) {
-  app.listen(PORT, () => {
-    logger.info(`DD Diamond Park API Server running on port ${PORT}`, {
-      environment: process.env.NODE_ENV || 'development',
-      port: PORT,
+  // Test database connection
+  testConnection().then(() => {
+    // Sync database (in development only)
+    if (process.env.NODE_ENV === 'development') {
+      return models.sequelize.sync({ alter: false });
+    }
+  }).then(() => {
+    const server = app.listen(PORT, () => {
+      logger.info(`DD Diamond Park API Server running on port ${PORT}`, {
+        environment: process.env.NODE_ENV || 'development',
+        port: PORT,
+        database: 'connected'
+      });
     });
+
+    // Initialize WebSocket server
+    const webSocketServer = new WebSocketServer(server);
+
+    // Set WebSocket server in notification service
+    const notificationService = require('./services/notificationService');
+    notificationService.setWebSocketServer(webSocketServer);
+
+    // Graceful shutdown
+    process.on('SIGTERM', () => {
+      logger.info('SIGTERM received, shutting down gracefully');
+      server.close(() => {
+        webSocketServer.shutdown();
+        process.exit(0);
+      });
+    });
+
+    process.on('SIGINT', () => {
+      logger.info('SIGINT received, shutting down gracefully');
+      server.close(() => {
+        webSocketServer.shutdown();
+        process.exit(0);
+      });
+    });
+  }).catch((error) => {
+    logger.error('Failed to start server:', error);
+    process.exit(1);
   });
 }
 
