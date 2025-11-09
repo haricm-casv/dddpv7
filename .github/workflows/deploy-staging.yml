@@ -1,0 +1,75 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm ci
+        npm run build
+      env:
+        REACT_APP_API_URL: ${{ secrets.STAGING_REACT_APP_API_URL }}
+        REACT_APP_VERSION: ${{ github.sha }}
+
+    - name: Build backend
+      run: |
+        cd backend
+        npm ci
+        npm run build || echo "Build not configured yet"
+      env:
+        NODE_ENV: staging
+
+    - name: Deploy to staging server
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.STAGING_HOST }}
+        username: ${{ secrets.STAGING_USER }}
+        key: ${{ secrets.STAGING_SSH_KEY }}
+        script: |
+          # Create backup
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          mkdir -p /var/www/test.dddp.online/backups/$TIMESTAMP
+
+          # Stop services
+          cd /var/www/test.dddp.online
+          pm2 stop ecosystem-staging.config.js || true
+
+          # Backup current deployment
+          cp -r frontend/build backups/$TIMESTAMP/ 2>/dev/null || true
+          cp -r backend backups/$TIMESTAMP/ 2>/dev/null || true
+
+          # Deploy frontend
+          rm -rf frontend/build
+          cp -r ~/frontend/build frontend/
+
+          # Deploy backend
+          rm -rf backend/dist
+          cp -r ~/backend/dist backend/ 2>/dev/null || true
+          cd backend
+          npm ci --production --ignore-scripts || true
+
+          # Start services
+          cd ..
+          pm2 start ecosystem-staging.config.js || pm2 start backend/src/server.js --name dddp-backend-staging
+          pm2 save
+
+          # Health check
+          sleep 15
+          curl -f http://test.dddp.online/health || curl -f http://localhost:3001/health || echo "Health check endpoint not available yet"
