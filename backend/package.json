@@ -1,0 +1,56 @@
+{
+  "name": "dddp-backend",
+  "version": "1.0.0",
+  "description": "Backend API for DD Diamond Park Apartment Management System",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "build": "babel src --out-dir dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .js",
+    "lint:fix": "eslint src --ext .js --fix",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "pg": "^8.9.0",
+    "sequelize": "^6.28.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^6.0.0",
+    "cors": "^2.8.5",
+    "express-validator": "^6.15.0",
+    "winston": "^3.8.0",
+    "nodemailer": "^6.9.0",
+    "multer": "^1.4.5-lts.1",
+    "redis": "^4.6.0",
+    "dotenv": "^16.0.0",
+    "uuid": "^9.0.0",
+    "joi": "^17.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.0",
+    "jest": "^29.4.0",
+    "supertest": "^6.3.0",
+    "nodemon": "^2.0.20",
+    "eslint": "^8.35.0",
+    "prettier": "^2.8.0"
+  },
+  "keywords": [
+    "apartment",
+    "management",
+    "system",
+    "api",
+    "express",
+    "postgresql"
+  ],
+  "author": "DD Diamond Park Development Team",
+  "license": "UNLICENSED"
+}
